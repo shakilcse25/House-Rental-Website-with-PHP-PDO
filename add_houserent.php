@@ -87,17 +87,17 @@
                   <div id="price_tab">
                     <ul>
                       <li class="fixeds"><a href="#fixed">Fixed Value</a></li>
-                      <li class="ranges"><a href="#range">Ranged Value</a></li>
+                      <!-- <li class="ranges"><a href="#range">Ranged Value</a></li> -->
                     </ul>
                     <div id="fixed">
                       <label for="amount_fixed" style="font-weight:bold;color:coral;">$</label>
                       <input type="text" id="amount_fixed" name="rental_value" readonly style="border:0; color:#f6931f; font-weight:bold;">
                       <div id="slider-range-max" class="myrange" title="Tap left or right button to set more precise value."></div>
                     </div>
-                    <div id="range">
+                    <!-- <div id="range">
                       <input type="text" id="amount" name="no" readonly style="border:0; color:#f6931f; font-weight:bold;">
                       <div id="slider-range" class="myrange" title="Tap left or right button to set more precise value."></div>
-                    </div>
+                    </div> -->
                   </div>
 
                 </div>

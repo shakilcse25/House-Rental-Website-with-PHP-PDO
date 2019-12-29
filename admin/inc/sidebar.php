@@ -46,12 +46,12 @@
                         <p>Cover Image</p>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="allhouse.php">
                         <i class="ti-user"></i>
                         <p>All House List</p>
                     </a>
-                </li>
+                </li> -->
             </ul>
     	</div>
     </div>

@@ -30,7 +30,7 @@
      $range1 = substr($arr[0],1);
      $range2 = substr($arr[1],2);
 
-     $data = $home->searchHome($range1,$range2,$_POST);
+     $data = $home->searchHome($range1,$range2,$_GET);
    }
 
 

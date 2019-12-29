@@ -1,6 +1,5 @@
 <?php
 	include_once '../lib/Session.php';
-	$db = new Database();
 	Session::init();
  ?>
 <!doctype html>

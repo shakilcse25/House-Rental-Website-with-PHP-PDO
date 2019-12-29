@@ -22,14 +22,25 @@
       <div class="main_right_nav col-sm-9">
         <ul class="navbar-nav">
           <?php
-            if(Session::get('login') == true && Session::get('user') == 'owner'){ ?>
-              <li class="nav-item"><a class="nav-link" href="owner_profile.php?id=<?php echo Session::get('user_id'); ?>">Your Profile</a></li>
+            if(Session::get('login') == true && (Session::get('user') == 'owner')){ ?>
+              <li class="nav-item"><a class="nav-link" href="owner_profile.php?owner_id=<?php echo Session::get('user_id'); ?>">Profile</a></li>
               <li class="nav-item"><a class="nav-link" href="add_houserent.php">Add For Rent</a></li>
-          <?php } ?>
+
+          <?php }
+            if(Session::get('login') == true && (Session::get('user') == 'tenant')){
+           ?>
+           <li class="nav-item"><a class="nav-link" href="tenant_profile.php?tenant_id=<?php echo Session::get('user_id'); ?>">Profile</a></li>
+
+         <?php } ?>
         </ul>
       </div>
 
+<?php
+if(($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST['delmsg']) && isset($_GET['id']) ) {
+  $delmsg = $msg->tempDelmsg(Session::get('user_id'), $_GET['id']);
+}
 
+ ?>
 
      <div class="dropdown_area col-sm-3 row">
      <?php
@@ -46,7 +57,12 @@
                   foreach ($allmsg as $message) {
                ?>
               <div class="dropdown-item">
-                <p><?php echo $message['message']; ?></p>
+                <p><?php echo $message['message']; ?>
+                  <form class="" action="<?php echo $_SERVER['PHP_SELF'].'?id='.$message['id']; ?>" method="post">
+                    <input style="font-size:10px;padding:5px;" onclick="<?php $url = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                    Session::set('path',$url); ?> this.form.submit();" type="submit" class="btn btn-danger small" name="delmsg" value="Delete">
+                  </form>
+                </p>
               </div>
             <?php } }else{ ?>
               <p class="dropdown-item">No new message!</p>

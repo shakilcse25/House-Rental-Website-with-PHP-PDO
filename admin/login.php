@@ -1,5 +1,5 @@
 <?php
-include 'admincontroller/Login.php';
+include_once 'admincontroller/Login.php';
 include_once '../lib/Session.php';
 Session::init();
  ?>
@@ -53,7 +53,7 @@ Session::init();
 
 <?php
     $login = new Login();
-    if(($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST['login'])) {
+    if(($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST['login'])) {
       $msg = $login->login($_POST['username'],$_POST['password']);
     }
 
@@ -68,7 +68,7 @@ Session::init();
 
  ?>
 
-        <form class="" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
           <div class="house_image">
             <img src="../assets/images/loginhouse.png" alt="">
           </div>

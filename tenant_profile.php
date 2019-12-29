@@ -7,8 +7,8 @@
 <?php
   $home = new Homecontroller();
   $id=0;
-  if(isset($_GET['owner_id'])){
-    $id = $_GET['owner_id'];
+  if(isset($_GET['tenant_id'])){
+    $id = $_GET['tenant_id'];
   }
   $user = $home->getUser($id);
  ?>
@@ -23,7 +23,7 @@
               <img src="<?php
                if(isset($user->pic) && $user->pic != ''){echo $user->pic;}else{ echo 'assets/images/owner.png'; } ?>" class="img-thumbnail" alt="Owner">
             </div>
-            <p class="text-center"> <i class="fas fa-user" style="margin-right:5px;"></i> <?php if(isset($user->fname)) echo $user->fname;if(isset($user->lname)) echo ' '.$user->lname; ?> </p>
+            <p class="text-center"> <i class="fas fa-user" style="margin-right:5px;"></i> <?php echo Session::get('fname')." ".Session::get('lname'); ?> </p>
           </div>
           <div class="profile_nav">
             <ul class="main_profile_nav">
@@ -50,12 +50,12 @@
         <div class="right_profile_inner">
           <div class="house_main">
             <div class="available_house col-sm-12">
-              <h4>Your Home List</h4>
+              <h4>Your Current Booked Home</h4>
 
 <?php
   $home = new Homecontroller();
 
-  $ava_home = $home->gethomeDetailsbyowner($id);
+  $ava_home = $home->gethomeDetailsbyTenant($id);
  ?>
 
 
@@ -81,7 +81,7 @@
                       if ($house['active_status'] == 1) {
                         $getuser = $home->getUser($house['tenant_id']);
                     ?>
-                      <p style="overflow:hidden;">Booked By <a href="tenant_profile.php?tenant_id=<?php echo $getuser->id; ?>" target="_blank" style="font-weight:strong;margin:0px;float:none;border:none;"><?php echo $getuser->fname.' '.$getuser->lname; ?></a> </p>
+                      <p style="overflow:hidden;">Booked By <a href="" style="font-weight:strong;margin:0px;float:none;border:none;"><?php echo $getuser->fname.' '.$getuser->lname; ?></a> </p>
                     <?php
                       }else if(is_array($total_req) && count($total_req) > 0){ ?>
                     <p style="display:inline-block;margin-top:10px;padding:4px 6px;color:#fff;border-radius:3px;background-color:cornflowerblue;"><span style="margin-left:5px;" class="badge badge-light"> <?php echo count($total_req); ?></span> request !</p>

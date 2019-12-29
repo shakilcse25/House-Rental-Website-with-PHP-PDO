@@ -35,7 +35,12 @@
               Session::set('email',$result->email);
               Session::set('lname',$result->lname);
               Session::set('fname',$result->fname);
-              Header('Location:index.php');
+              if (Session::get('path')) {
+                Header('Location:'.Session::get('path'));
+              }
+              else{
+                Header('Location:index.php');
+              }
             }
             else{
               return 'nouser';

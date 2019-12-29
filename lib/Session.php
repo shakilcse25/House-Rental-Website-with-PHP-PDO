@@ -20,14 +20,14 @@
     }
 
     public static function checkSession(){
-      self::init();
+      // self::init();
       if(self::get('login') == false){
         self::sessionDestroy();
       }
     }
 
     public static function checkAdmin(){
-      if(self::get('login') !== 'admin'){
+      if(self::get('user') != 'admin'){
         session_destroy();
         Header('Location:login.php');
       }

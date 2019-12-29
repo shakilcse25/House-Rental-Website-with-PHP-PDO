@@ -16,22 +16,39 @@
   }
   $house = $home->gethomeDetails_obj($id);
   $houseid = $house['id'];
+
   $ownerid = $house['owner_id'];
-  if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['free_home'])) {
+  if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['free_home'])){
     $req = $home->freeHome($houseid);
     echo "<meta http-equiv='refresh' content='0'>";
   }
  ?>
 
+
+ <?php
+   if(($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST['delhouse'])){
+     $home->deletehouse($houseid,Session::get('user_id'));
+   }
+  ?>
+
       <div class="house_slider col-sm-6">
         <div class="house_slider_inner">
           <div class="all_house_slider">
+            <?php if($house['img_1'] != ''){?>
             <div class="single_house_slider">
-              <img src="assets/images/cover1.jpg" alt="">
+              <img src="<?php echo $house['img_1']; ?>" alt="">
             </div>
+            <?php } ?>
+            <?php if($house['img_2'] != ''){?>
             <div class="single_house_slider">
-              <img src="assets/images/cover2.jpg" alt="">
+              <img src="<?php echo $house['img_2']; ?>" alt="">
             </div>
+            <?php } ?>
+            <?php if($house['img_3'] != ''){?>
+            <div class="single_house_slider">
+              <img src="<?php echo $house['img_3']; ?>" alt="">
+            </div>
+            <?php } ?>
           </div>
           <div class="house_description">
             <p class="text-justify"><?php echo $house['description']; ?></p>
@@ -116,7 +133,7 @@
              ?>
              <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                  Booked by <?php echo "<a href=''>".$tenant['fname']." ".$tenant['lname']."</a>"; ?>
+                  Booked by <a href="tenant_profile.php?tenant_id=<?php echo $tenant->id; ?>" target="_blank" ><?php echo $tenant->fname.' '.$tenant->lname; ?></a>
                 </button>
                 <div style="left:45px !important;" class="dropdown-menu">
                   <form class="dropdown-item" action="<?php echo $_SERVER['PHP_SELF'].'?house_id='.$house['id'];?>" method="post">
@@ -129,6 +146,12 @@
                 Booked request<span style="margin-left:5px;" class="badge badge-light"><?php if(is_array($total_req)){echo count($total_req);} ?></span>
               </button>
             <?php } ?>
+
+
+
+              <form action="<?php echo $_SERVER['PHP_SELF'].'?house_id='.$houseid; ?>" method="post" style="margin-top:10px;">
+                <input type="submit" class="btn btn-danger" onclick="return confirm('Are you Sure to Delete?');" name="delhouse" value="Delete This House">
+              </form>
 
 
 
@@ -150,11 +173,11 @@
                        ?>
                       <form class="" action="<?php echo $_SERVER['PHP_SELF'].'?house_id='.$house['id'];?>" method="post">
                         <div class="row">
-                          <p style="padding-top:5px;" class="col-sm-6"><?php echo $tenant['fname'].' '.$tenant['lname']; ?></p>
-                          <input type="hidden" name="tenant_id" value="<?php echo $tenant['id']; ?>">
-                          <div class="profile_btn col-sm-2 ">
+                          <p style="padding-top:5px;" class="col-sm-6"> <a href="tenant_profile.php?tenant_id=<?php echo $tenant->id; ?>" target="_blank" > <?php echo $tenant->fname.' '.$tenant->lname; ?></a></p>
+                          <input type="hidden" name="tenant_id" value="<?php echo $tenant->id; ?>">
+                          <!-- <div class="profile_btn col-sm-2 ">
                             <a style="width:90%;color:#fff;cursor:pointer;" class="btn btn-info">Profile</a>
-                          </div>
+                          </div> -->
                           <div class="accept_btn col-sm-2 ">
                             <input style="width:90%;" class="btn btn-success" type="submit" name="accept" value="Accept">
                           </div>
@@ -196,7 +219,7 @@
               <?php
                 if ($check=='no') {
                ?>
-              <input type="submit" class="btn btn-primary" name="request" value="Request to Booked">
+              <input type="submit" class="btn btn-primary" name="request" value="Request for rent">
             <?php }else if($check=='yes'){ ?>
               <input type="submit" class="btn btn-danger" name="cancel" value="Cancel Booked">
             <?php }else if($check=='booked'){ ?>
@@ -206,10 +229,23 @@
           </div>
 
           <div class="single_action">
-            <a class="btn btn-info" href="owner_profile.php?id=<?php echo $house['owner_id']; ?>">Contact to owner</a>
+            <a class="btn btn-info" href="owner_profile.php?owner_id=<?php echo $house['owner_id']; ?>">Contact to owner</a>
           </div>
-<?php } ?>
+<?php } else if(!Session::get('user') == 'owner'){ ?>
 
+  <div class="single_action">
+    <a class="btn btn-info" onclick="loginpage(<?php echo $house['id']; ?>);">Contact to owner</a>
+  </div>
+<?php } ?>
+<script>
+  function loginpage($id){
+    <?php
+        Session::set('path',"housedetails.php?house_id=".$id);
+     ?>
+     window.location = "user_login.php";
+
+  }
+</script>
 
         </div>
       </div>

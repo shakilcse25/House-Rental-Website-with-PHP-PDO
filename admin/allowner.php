@@ -6,7 +6,7 @@
 <div class="main-panel">
 <?php
 	include 'inc/topnav.php';
-	include 'Admincontroller/Owner.php';
+	include_once 'admincontroller/Owner.php';
 ?>
 
 <?php
@@ -24,7 +24,7 @@
                     <th>Serial</th>
                     <th>Name</th>
                     <th>Gmail</th>
-                    <th>Number of House</th>
+                    <!-- <th>Number of House</th> -->
                     <th>View</th>
                 </tr>
             </thead>
@@ -39,7 +39,7 @@
                     <td><?php echo $i; ?></td>
                     <td><?php echo $user['fname'].' '.$user['lname']; ?></td>
                     <td><?php echo $user['email']; ?></td>
-                    <td style="padding-left:75px;"><?php echo $user['house_number']; ?></td>
+                    <!-- <td style="padding-left:75px;"></td> -->
                     <td> <a class="btn btn-info" href="ownerdetails.php?id=<?php echo $user['id']; ?>" >view</a> </td>
                 </tr>
               <?php } }else{ echo "<p>There is no user!</p>"; } ?>

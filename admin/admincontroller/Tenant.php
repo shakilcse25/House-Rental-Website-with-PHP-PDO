@@ -1,5 +1,5 @@
 <?php
-include 'Admincontroller.php';
+include_once 'Admincontroller.php';
 class Tenant extends Admincontroller
 {
 
